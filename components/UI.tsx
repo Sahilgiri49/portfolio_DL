@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store/useStore';
 import type { Page, Project } from '../types';
-import { Home, BrainCircuit, Code, Trophy, GraduationCap, Send, ExternalLink } from 'lucide-react';
+import { Home, BrainCircuit, Code, Trophy, GraduationCap, Send, ExternalLink, Instagram, Linkedin, Twitter, Github } from 'lucide-react';
 import { skills, projects, achievements, education } from '../data/portfolioData';
 import AIAgent from './AIAgent';
 
@@ -65,16 +65,16 @@ const ProjectsPage: React.FC = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: i * 0.1 }}
-                        className="bg-black/50 border border-purple-glow/30 p-6 rounded-lg flex flex-col justify-between cursor-pointer hover:border-purple-glow hover:shadow-[0_0_15px_rgba(168,85,247,0.5)] transition-all"
+                        className="bg-black/50 border border-cyan-glow/30 p-6 rounded-lg flex flex-col justify-between cursor-pointer hover:border-cyan-glow hover:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
                         onClick={() => setActiveProject(project)}
                     >
                         <div>
-                            <p className="text-sm text-purple-glow/80 font-space-grotesk mb-1">{project.cluster}</p>
-                            <h3 className="text-xl font-bold text-purple-glow mb-3 font-orbitron">{project.name}</h3>
+                            <p className="text-sm text-cyan-glow/80 font-space-grotesk mb-1">{project.cluster}</p>
+                            <h3 className="text-xl font-bold text-cyan-glow mb-3 font-orbitron">{project.name}</h3>
                             <p className="text-white/70 text-sm mb-4">{project.description}</p>
                         </div>
                         <div className="flex flex-wrap gap-2 mt-auto">
-                            {project.tech.slice(0, 3).map(t => <span key={t} className="bg-purple-glow/10 text-purple-glow px-2 py-1 text-xs rounded-full">{t}</span>)}
+                            {project.tech.slice(0, 3).map(t => <span key={t} className="bg-cyan-glow/10 text-cyan-glow px-2 py-1 text-xs rounded-full">{t}</span>)}
                         </div>
                     </motion.div>
                 ))}
@@ -97,14 +97,14 @@ const AchievementsPage: React.FC = () => (
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.15 }}
-                    className="bg-black/50 border border-yellow-400/30 p-6 rounded-lg flex items-start justify-between gap-4 hover:border-yellow-400/80 transition-colors"
+                    className="bg-black/50 border border-cyan-glow/30 p-6 rounded-lg flex items-start justify-between gap-4 hover:border-cyan-glow/80 transition-colors"
                 >
                     <div>
-                        <h3 className="text-xl font-bold text-yellow-400 font-orbitron mb-2">{ach.title}</h3>
+                        <h3 className="text-xl font-bold text-cyan-glow font-orbitron mb-2">{ach.title}</h3>
                         <p className="text-white/80">{ach.details}</p>
                     </div>
                     {ach.proof && ach.proof !== '#' && (
-                         <a href={ach.proof} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 mt-1 flex items-center gap-2 text-yellow-400/80 hover:text-yellow-400 hover:underline">
+                         <a href={ach.proof} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 mt-1 flex items-center gap-2 text-cyan-glow/80 hover:text-cyan-glow hover:underline">
                              Proof <ExternalLink size={16} />
                          </a>
                     )}
@@ -171,39 +171,89 @@ const Navbar: React.FC = () => {
 
 const HomePage: React.FC = () => {
   const { setCurrentPage } = useStore();
+  const [skillIndex, setSkillIndex] = useState(0);
+  const skillsToAnimate = ['AI Developer', 'Innovator', 'Problem Solver', 'Deep Learning Engineer', 'Creative Coder'];
+
+  useEffect(() => {
+      const interval = setInterval(() => {
+        setSkillIndex((prevIndex) => (prevIndex + 1) % skillsToAnimate.length);
+      }, 2000);
+      return () => clearInterval(interval);
+  }, [skillsToAnimate.length]);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20, transition: { duration: 0.3 } }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.3 } }}
       transition={{ duration: 1, delay: 0.5 }}
-      className="text-center font-orbitron"
+      className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between gap-12 px-8"
     >
-      <h1 className="text-5xl md:text-7xl font-bold mb-4">
-        <span className="text-white">SAHIL GIRI</span>
-      </h1>
-      <p className="text-lg md:text-2xl text-cyan-glow mb-8 font-space-grotesk">
-        AI Developer | Innovator | Problem Solver
-      </p>
-      <p className="text-md md:text-xl text-white/80 mb-12 font-jetbrains-mono">
-        Welcome to my MindSpace
-      </p>
-      <div className="flex justify-center space-x-6">
-        <button
-          onClick={() => setCurrentPage('skills')}
-          className="font-bold text-lg bg-cyan-glow text-black px-8 py-3 rounded-full transition-all duration-300 glow-button transform hover:scale-105"
-        >
-          Enter Network
-        </button>
-        <a
-          href="/resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-bold text-lg text-cyan-glow border-2 border-cyan-glow px-8 py-3 rounded-full transition-all duration-300 hover:bg-cyan-glow/20 transform hover:scale-105"
-        >
-          Resume.pdf
-        </a>
+      <div className="text-center md:text-left font-orbitron order-2 md:order-1">
+        <h1 className="text-5xl md:text-7xl font-bold mb-4">
+          <span className="text-white">SAHIL GIRI</span>
+        </h1>
+        <p className="text-lg md:text-2xl text-cyan-glow mb-8 font-space-grotesk h-8">
+          <AnimatePresence mode="wait">
+              <motion.span
+                  key={skillIndex}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5 }}
+                  className="inline-block"
+              >
+                  {skillsToAnimate[skillIndex]}
+              </motion.span>
+          </AnimatePresence>
+        </p>
+        <p className="text-md md:text-xl text-white/80 mb-12 font-jetbrains-mono">
+          Welcome to my MindSpace
+        </p>
+        <div className="flex justify-center md:justify-start space-x-6">
+          <button
+            onClick={() => setCurrentPage('skills')}
+            className="font-bold text-lg bg-cyan-glow text-black px-8 py-3 rounded-full transition-all duration-300 glow-button transform hover:scale-105"
+          >
+            Enter Network
+          </button>
+          <button
+            onClick={() => setCurrentPage('contact')}
+            className="font-bold text-lg text-cyan-glow border-2 border-cyan-glow px-8 py-3 rounded-full transition-all duration-300 hover:bg-cyan-glow/20 transform hover:scale-105"
+          >
+            Send Signal
+          </button>
+        </div>
+         <div className="flex justify-center space-x-8 mt-10">
+            <a href="https://www.instagram.com/sahill.___17/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-cyan-glow/70 hover:text-cyan-glow transition-transform hover:scale-110">
+                <Instagram size={28} />
+            </a>
+            <a href="https://www.linkedin.com/in/sahil-g-773989279/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-cyan-glow/70 hover:text-cyan-glow transition-transform hover:scale-110">
+                <Linkedin size={28} />
+            </a>
+            <a href="https://github.com/Sahilgiri49" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-cyan-glow/70 hover:text-cyan-glow transition-transform hover:scale-110">
+                <Github size={28} />
+            </a>
+            <a href="https://x.com/SahilGiri37559" target="_blank" rel="noopener noreferrer" aria-label="X" className="text-cyan-glow/70 hover:text-cyan-glow transition-transform hover:scale-110">
+                <Twitter size={28} />
+            </a>
+        </div>
       </div>
+      
+      <motion.div
+        className="relative w-48 h-48 md:w-72 md:h-72 flex-shrink-0 order-1 md:order-2"
+        animate={{ y: [-5, 5] }}
+        transition={{ repeat: Infinity, repeatType: 'reverse', duration: 4, ease: 'easeInOut' }}
+      >
+        <div className="absolute inset-0 rounded-full bg-blue-glow blur-3xl opacity-60 animate-pulse-slow"></div>
+        <img
+            src="https://pbs.twimg.com/profile_images/1906565509916803072/dTJQW0cr_400x400.jpg"
+            alt="Sahil Giri"
+            className="relative w-full h-full object-cover rounded-full border-4 border-blue-glow/80 filter grayscale contrast-125"
+            style={{ boxShadow: '0 0 15px rgba(37, 99, 235, 0.8), 0 0 25px rgba(37, 99, 235, 0.6)' }}
+        />
+        <div className="absolute inset-0 bg-blue-glow/30 rounded-full mix-blend-color pointer-events-none"></div>
+    </motion.div>
     </motion.div>
   );
 };
@@ -221,12 +271,12 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
-        className="bg-black border border-purple-glow/50 p-8 rounded-lg max-w-2xl w-full font-space-grotesk relative"
+        className="bg-black border border-cyan-glow/50 p-8 rounded-lg max-w-2xl w-full font-space-grotesk relative"
         onClick={(e) => e.stopPropagation()}
-        style={{ boxShadow: '0 0 20px #a855f7, 0 0 40px #a855f7' }}
+        style={{ boxShadow: '0 0 20px #00ffff, 0 0 40px #00ffff' }}
       >
         <button onClick={onClose} className="absolute top-4 right-4 text-white/70 hover:text-white text-3xl">&times;</button>
-        <h2 className="text-3xl font-orbitron font-bold text-purple-glow mb-4">{project.name}</h2>
+        <h2 className="text-3xl font-orbitron font-bold text-cyan-glow mb-4">{project.name}</h2>
         <p className="text-white/80 mb-6">{project.description}</p>
         <div className="mb-6">
           <h3 className="font-bold text-cyan-glow mb-2">Tech Stack:</h3>
@@ -236,8 +286,8 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
         </div>
         <p className="text-white/80 mb-6 font-jetbrains-mono text-sm"><strong>Achievement:</strong> {project.achievements}</p>
         <div className="flex space-x-4">
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="font-bold text-lg text-purple-glow border border-purple-glow px-6 py-2 rounded-full transition hover:bg-purple-glow/20">GitHub</a>
-          <a href={project.live} target="_blank" rel="noopener noreferrer" className="font-bold text-lg bg-purple-glow text-black px-6 py-2 rounded-full transition hover:bg-opacity-80">Live Demo</a>
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="font-bold text-lg text-cyan-glow border border-cyan-glow px-6 py-2 rounded-full transition hover:bg-cyan-glow/20">GitHub</a>
+          <a href={project.live} target="_blank" rel="noopener noreferrer" className="font-bold text-lg bg-cyan-glow text-black px-6 py-2 rounded-full transition hover:bg-opacity-80 glow-button">Live Demo</a>
         </div>
       </motion.div>
     </motion.div>

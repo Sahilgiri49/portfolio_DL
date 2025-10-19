@@ -1,12 +1,23 @@
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import Scene from './components/Scene';
 import UI from './components/UI';
 import { Loader } from '@react-three/drei';
+import Intro from './components/Intro';
 
 const App: React.FC = () => {
+  const [introFinished, setIntroFinished] = useState(false);
+
+  const handleIntroFinish = () => {
+    setIntroFinished(true);
+  };
+
+  if (!introFinished) {
+    return <Intro onFinished={handleIntroFinish} />;
+  }
+  
   return (
-    <main className="w-screen h-screen bg-black">
+    <main className="w-screen h-screen bg-black animate-fade-in">
       <Suspense fallback={null}>
         <Scene />
       </Suspense>

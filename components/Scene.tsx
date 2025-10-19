@@ -54,13 +54,11 @@ const NeuronNode: React.FC<{ node: any; type: string }> = ({ node, type }) => {
   const handlePointerOver = (e: any) => {
     e.stopPropagation();
     setIsHovered(true);
-    document.body.style.cursor = 'pointer';
     setHoveredNode(node.id);
   };
   
   const handlePointerOut = () => {
     setIsHovered(false);
-    document.body.style.cursor = 'auto';
     setHoveredNode(null);
   };
 
