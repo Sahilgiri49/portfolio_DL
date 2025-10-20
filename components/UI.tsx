@@ -37,7 +37,7 @@ const SkillsPage: React.FC = () => (
         exit={{ opacity: 0, y: -20 }}
         className="w-full h-full flex items-center justify-center p-4 md:p-8"
     >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full h-full overflow-y-auto p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full h-full overflow-y-auto p-4 no-scrollbar">
             {skills.map((skill, i) => (
                 <motion.div
                     key={skill.id}
@@ -64,7 +64,7 @@ const ProjectsPage: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="w-full h-full flex items-center justify-center p-4 md:p-8"
         >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 md:gap-x-8 max-w-6xl w-full h-full overflow-y-auto p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 md:gap-x-8 max-w-6xl w-full h-full overflow-y-auto p-4 no-scrollbar">
                 {projects.map((project, i) => (
                    <div key={project.id} className="flex flex-col items-center gap-4">
                         <motion.div
@@ -119,7 +119,7 @@ const AchievementsPage: React.FC = () => (
         exit={{ opacity: 0, y: -20 }}
         className="w-full h-full flex items-center justify-center p-4 md:p-8"
     >
-        <div className="space-y-6 max-w-4xl w-full h-full overflow-y-auto p-4">
+        <div className="space-y-6 max-w-4xl w-full h-full overflow-y-auto p-4 no-scrollbar">
             {achievements.map((ach, i) => (
                 <motion.div
                     key={ach.id}
@@ -150,7 +150,7 @@ const EducationPage: React.FC = () => (
         exit={{ opacity: 0, y: -20 }}
         className="w-full h-full flex items-center justify-center p-4 md:p-8"
     >
-        <div className="max-w-4xl w-full h-full overflow-y-auto p-4 font-space-grotesk">
+        <div className="max-w-4xl w-full h-full overflow-y-auto p-4 font-space-grotesk no-scrollbar">
             <div className="relative border-l-2 border-blue-glow/30 ml-6">
                 {education.map((edu, i) => (
                     <motion.div
@@ -213,7 +213,7 @@ const ResumePage: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="w-full h-full flex items-center justify-center p-4 md:p-8"
         >
-            <div className="max-w-4xl w-full h-full overflow-y-auto p-6 bg-black/50 border border-cyan-glow/20 rounded-lg font-space-grotesk text-white/90">
+            <div className="max-w-4xl w-full h-full overflow-y-auto p-6 bg-black/50 border border-cyan-glow/20 rounded-lg font-space-grotesk text-white/90 no-scrollbar">
                 {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-4xl font-bold font-orbitron text-glow-white">SAHIL GIRI</h1>

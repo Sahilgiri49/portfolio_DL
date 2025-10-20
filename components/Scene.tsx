@@ -1,6 +1,8 @@
 // Fix: The global types for react-three-fiber are imported in `index.tsx` and do not
 // need to be re-imported here. This resolves issues with JSX elements like `<mesh>`
 // not being recognized.
+// Fix: Directly import types to ensure JSX namespace augmentation is applied for react-three-fiber elements.
+import '../types';
 import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useThree, RootState } from '@react-three/fiber';
 import { Points, PointMaterial, Line, Html } from '@react-three/drei';
