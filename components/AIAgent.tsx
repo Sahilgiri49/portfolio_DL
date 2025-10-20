@@ -33,6 +33,8 @@ const AIAgent: React.FC = () => {
         'achievements': { page: 'achievements', response: 'Displaying the Output Layer: Achievements.' },
         'education': { page: 'education', response: 'Accessing the Memory Bank: Education.' },
         'contact': { page: 'contact', response: 'Establishing a Synaptic Connection.' },
+        'resume': { page: 'resume', response: 'Displaying the core data file: Resume.' },
+        'cv': { page: 'resume', response: 'Displaying the core data file: Resume.' },
     };
 
     for (const key in commandMap) {
@@ -43,15 +45,13 @@ const AIAgent: React.FC = () => {
         }
     }
 
-    if (lowerCaseCommand.includes('resume') || lowerCaseCommand.includes('cv')) {
-        window.open('/resume.pdf', '_blank');
-        aiResponseText = 'Opening resume.pdf in a new tab for you.';
-    } else if (lowerCaseCommand === 'help') {
-        aiResponseText = "You can ask me to navigate. Try: 'home', 'skills', 'projects', 'achievements', 'education', 'contact', or 'open resume'.";
+    if (lowerCaseCommand === 'help') {
+        aiResponseText = "You can ask me to navigate. Try: 'home', 'skills', 'projects', 'achievements', 'education', 'contact', or 'view resume'.";
     } else if (lowerCaseCommand.includes('hello') || lowerCaseCommand.includes('hi')) {
         aiResponseText = "Hello there! It's a pleasure to guide you through this digital mind.";
     }
 
+    // Fix: Corrected variable name from aiResponseResponseText to aiResponseText.
     const aiMessage: Message = { sender: 'ai', text: aiResponseText };
     setMessages(prev => [...prev, { sender: 'user', text: command }, aiMessage]);
   };

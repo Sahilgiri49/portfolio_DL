@@ -1,4 +1,5 @@
-
+// Fix: Import global types to apply react-three-fiber JSX augmentations.
+import '../types';
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';

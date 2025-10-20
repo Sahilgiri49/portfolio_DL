@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store/useStore';
 import type { Page, Project } from '../types';
-import { Home, BrainCircuit, Code, Trophy, GraduationCap, Send, ExternalLink, Instagram, Linkedin, Twitter, Github, Download } from 'lucide-react';
+import { Home, BrainCircuit, Code, Trophy, GraduationCap, Send, ExternalLink, Instagram, Linkedin, Twitter, Github, FileText } from 'lucide-react';
 import { skills, projects, achievements, education } from '../data/portfolioData';
 import AIAgent from './AIAgent';
 
@@ -16,6 +15,7 @@ const icons: { [key in Page]: React.ReactNode } = {
   projects: <Code size={24} />,
   achievements: <Trophy size={24} />,
   education: <GraduationCap size={24} />,
+  resume: <FileText size={24} />,
   contact: <Send size={24} />,
 };
 
@@ -24,6 +24,8 @@ const pageTitles: { [key in Page]?: string } = {
     projects: "Hidden Layers: Projects",
     achievements: "Output Layer: Achievements",
     education: "Memory Bank: Education",
+    resume: "Core Data: Resume",
+    contact: "Synaptic Connection",
 }
 
 // --- Page Components ---
@@ -35,7 +37,7 @@ const SkillsPage: React.FC = () => (
         exit={{ opacity: 0, y: -20 }}
         className="w-full h-full flex items-center justify-center p-4 md:p-8"
     >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full h-[80vh] overflow-y-auto p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full h-full overflow-y-auto p-4">
             {skills.map((skill, i) => (
                 <motion.div
                     key={skill.id}
@@ -62,7 +64,7 @@ const ProjectsPage: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="w-full h-full flex items-center justify-center p-4 md:p-8"
         >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 max-w-6xl w-full h-[80vh] overflow-y-auto p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 md:gap-x-8 max-w-6xl w-full h-full overflow-y-auto p-4">
                 {projects.map((project, i) => (
                    <div key={project.id} className="flex flex-col items-center gap-4">
                         <motion.div
@@ -117,7 +119,7 @@ const AchievementsPage: React.FC = () => (
         exit={{ opacity: 0, y: -20 }}
         className="w-full h-full flex items-center justify-center p-4 md:p-8"
     >
-        <div className="space-y-6 max-w-4xl w-full h-[80vh] overflow-y-auto p-4">
+        <div className="space-y-6 max-w-4xl w-full h-full overflow-y-auto p-4">
             {achievements.map((ach, i) => (
                 <motion.div
                     key={ach.id}
@@ -148,7 +150,7 @@ const EducationPage: React.FC = () => (
         exit={{ opacity: 0, y: -20 }}
         className="w-full h-full flex items-center justify-center p-4 md:p-8"
     >
-        <div className="max-w-4xl w-full h-[80vh] overflow-y-auto p-4 font-space-grotesk">
+        <div className="max-w-4xl w-full h-full overflow-y-auto p-4 font-space-grotesk">
             <div className="relative border-l-2 border-blue-glow/30 ml-6">
                 {education.map((edu, i) => (
                     <motion.div
@@ -173,18 +175,119 @@ const EducationPage: React.FC = () => (
     </motion.div>
 );
 
+const ResumePage: React.FC = () => {
+    const professionalExperience = [
+        {
+            role: 'AI Internship (Python)',
+            company: 'IT Networkz Company',
+            year: '2024',
+            points: [
+                'Gained practical experience in using Python libraries like Pandas, NumPy, and Scikit-learn for data analysis and model building.',
+                'Collaborated with a team to complete a capstone project, showcasing end-to-end AI development processes.',
+                'Strengthened understanding of AI concepts and their real-world applications through hands-on learning.'
+            ]
+        },
+        {
+            role: 'Assistant - Vote Counting',
+            company: 'Maharashtra Election Commission, Nagpur',
+            year: '2024',
+            points: [
+                'Assisted in the accurate counting and verification of votes during local elections.',
+                'Collaborated with a team to ensure a transparent and smooth electoral process.',
+                'Demonstrated strong attention to detail and responsibility in high-pressure situations.'
+            ]
+        }
+    ];
+
+    const ResumeSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
+        <div className="mb-6">
+            <h2 className="text-2xl font-bold font-orbitron text-cyan-glow border-b-2 border-cyan-glow/30 pb-2 mb-4">{title}</h2>
+            {children}
+        </div>
+    );
+    
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="w-full h-full flex items-center justify-center p-4 md:p-8"
+        >
+            <div className="max-w-4xl w-full h-full overflow-y-auto p-6 bg-black/50 border border-cyan-glow/20 rounded-lg font-space-grotesk text-white/90">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <h1 className="text-4xl font-bold font-orbitron text-glow-white">SAHIL GIRI</h1>
+                    <p className="text-xl text-cyan-glow">DIPLOMA IN AIML</p>
+                    <div className="flex justify-center flex-wrap gap-x-4 gap-y-2 text-sm text-white/70 mt-2">
+                        <span>Ayodhyanagar, Nagpur</span>
+                        <span>|</span>
+                        <a href="https://sahil-giri.netlify.app/" className="hover:text-cyan-glow">https://sahil-giri.netlify.app/</a>
+                        <span>|</span>
+                        <a href="mailto:sahilgiri59902@gmail.com" className="hover:text-cyan-glow">sahilgiri59902@gmail.com</a>
+                    </div>
+                </div>
+
+                {/* Summary */}
+                <p className="text-center text-white/80 mb-8 border-y border-cyan-glow/20 py-4">
+                    A dedicated and versatile Artificial Intelligence and Machine Learning (AIML) student with hands-on experience in solving real-world problems through participation in multiple hackathons. Proven ability to collaborate effectively in teams, demonstrated by contributing to innovative projects.
+                </p>
+
+                {/* Professional Experience */}
+                <ResumeSection title="Professional Experience">
+                    {professionalExperience.map(exp => (
+                        <div key={exp.role} className="mb-4">
+                            <h3 className="text-lg font-bold text-white">{exp.role} | {exp.company}
+                                <span className="text-sm font-normal text-white/60 ml-2">{exp.year}</span>
+                            </h3>
+                            <ul className="list-disc list-inside mt-1 text-white/80 space-y-1">
+                                {exp.points.map((point, i) => <li key={i}>{point}</li>)}
+                            </ul>
+                        </div>
+                    ))}
+                </ResumeSection>
+                
+                {/* Education */}
+                 <ResumeSection title="Education">
+                    {education.filter(e => e.id.startsWith('edu-diploma') || e.id.startsWith('edu-ssc')).map(edu => (
+                         <div key={edu.id} className="mb-2">
+                            <h3 className="text-lg font-bold text-white">{edu.title}
+                                <span className="text-sm font-normal text-white/60 ml-2">({edu.year})</span>
+                            </h3>
+                            <p className="text-white/80">{edu.institution}</p>
+                        </div>
+                    ))}
+                </ResumeSection>
+
+                {/* Skills */}
+                <ResumeSection title="Skills">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center">
+                        {skills.map(skill => <div key={skill.id} className="bg-cyan-glow/10 text-cyan-glow p-2 rounded-md">{skill.name}</div>)}
+                    </div>
+                </ResumeSection>
+
+                 {/* Additional Information */}
+                <ResumeSection title="Additional Information">
+                    <p className="text-white/80"><strong className="text-white">Languages:</strong> English, Marathi, Hindi, German (ongoing).</p>
+                    <p className="text-white/80"><strong className="text-white">Certifications:</strong> Recognized with multiple certificates for excellence in technology, UI/UX design, sports, and visual arts.</p>
+                </ResumeSection>
+            </div>
+        </motion.div>
+    );
+};
+
+
 // --- Core UI Components ---
 
 const Navbar: React.FC = () => {
   const { currentPage, setCurrentPage } = useStore();
 
   return (
-    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-sm p-2 rounded-full z-50 flex space-x-2 border border-cyan-glow/20">
-      {(Object.keys(icons) as Page[]).map((page) => (
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-sm p-2 rounded-full z-50 flex space-x-1 sm:space-x-2 border border-cyan-glow/20">
+      {(Object.keys(icons) as Page[]).filter(page => page !== 'resume').map((page) => (
         <button
           key={page}
           onClick={() => setCurrentPage(page)}
-          className={`p-3 rounded-full transition-all duration-300 ${
+          className={`p-2 sm:p-3 rounded-full transition-all duration-300 ${
             currentPage === page ? 'bg-cyan-glow text-black' : 'text-cyan-glow hover:bg-cyan-glow/20'
           }`}
           aria-label={page}
@@ -214,13 +317,13 @@ const HomePage: React.FC = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.3 } }}
       transition={{ duration: 1, delay: 0.5 }}
-      className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between gap-12 px-8"
+      className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between gap-8 md:gap-12 px-4 md:px-8"
     >
       <div className="text-center md:text-left font-orbitron order-2 md:order-1">
-        <h1 className="text-5xl md:text-7xl font-bold mb-4">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4">
           <span className="text-glow-white">SAHIL GIRI</span>
         </h1>
-        <p className="text-lg md:text-2xl text-cyan-glow mb-8 font-space-grotesk h-8">
+        <p className="text-lg sm:text-xl md:text-2xl text-cyan-glow mb-8 font-space-grotesk h-8">
           <AnimatePresence mode="wait">
               <motion.span
                   key={skillIndex}
@@ -235,23 +338,23 @@ const HomePage: React.FC = () => {
           </AnimatePresence>
         </p>
         <div className="mb-12">
-          <p className="text-md md:text-xl text-white/80 mb-4 font-jetbrains-mono">
+          <p className="text-base md:text-xl text-white/80 mb-4 font-jetbrains-mono">
             Welcome to my MindSpace
           </p>
           <p className="text-sm md:text-base text-white/70 font-space-grotesk max-w-xl mx-auto md:mx-0">
-            A dedicated AI/ML student with hands-on experience in solving real-world problems through multiple hackathons and internships.
+            A dedicated and versatile AIML student with hands-on experience solving real-world problems in hackathons. Proven ability to collaborate and contribute to innovative projects.
           </p>
         </div>
-        <div className="flex justify-center md:justify-start space-x-6">
+        <div className="flex justify-center md:justify-start space-x-4 md:space-x-6">
           <button
             onClick={() => setCurrentPage('skills')}
-            className="font-bold text-lg bg-cyan-glow text-black px-8 py-3 rounded-full transition-all duration-300 glow-button transform hover:scale-105"
+            className="font-bold text-lg bg-cyan-glow text-black px-6 py-3 md:px-8 rounded-full transition-all duration-300 glow-button transform hover:scale-105"
           >
             Enter Network
           </button>
           <button
             onClick={() => setCurrentPage('contact')}
-            className="font-bold text-lg text-cyan-glow border-2 border-cyan-glow px-8 py-3 rounded-full transition-all duration-300 hover:bg-cyan-glow/20 transform hover:scale-105"
+            className="font-bold text-lg text-cyan-glow border-2 border-cyan-glow px-6 py-3 md:px-8 rounded-full transition-all duration-300 hover:bg-cyan-glow/20 transform hover:scale-105"
           >
             Send Signal
           </button>
@@ -288,18 +391,17 @@ const HomePage: React.FC = () => {
           <div className="absolute inset-0 bg-blue-glow/30 rounded-full mix-blend-color pointer-events-none"></div>
         </motion.div>
 
-        <motion.a
-          href="/resume.png"
-          download="Sahil_Giri_Resume.png"
+        <motion.button
+          onClick={() => setCurrentPage('resume')}
           className="flex items-center gap-3 font-bold text-lg text-blue-glow border-2 border-blue-glow px-8 py-3 rounded-full transition-all duration-300 hover:bg-blue-glow/20 transform hover:scale-105"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
-          aria-label="Download CV"
+          aria-label="View CV"
         >
-          <Download size={20} />
-          Download CV
-        </motion.a>
+          <FileText size={20} />
+          View CV
+        </motion.button>
       </div>
 
     </motion.div>
@@ -319,12 +421,12 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
-        className="bg-black border border-cyan-glow/50 p-8 rounded-lg max-w-2xl w-full font-space-grotesk relative"
+        className="bg-black border border-cyan-glow/50 p-6 md:p-8 rounded-lg max-w-2xl w-full font-space-grotesk relative"
         onClick={(e) => e.stopPropagation()}
         style={{ boxShadow: '0 0 20px #00ffff, 0 0 40px #00ffff' }}
       >
         <button onClick={onClose} className="absolute top-4 right-4 text-white/70 hover:text-white text-3xl">&times;</button>
-        <h2 className="text-3xl font-orbitron font-bold text-cyan-glow mb-4">{project.name}</h2>
+        <h2 className="text-2xl md:text-3xl font-orbitron font-bold text-cyan-glow mb-4">{project.name}</h2>
         <p className="text-white/80 mb-6">{project.description}</p>
         <div className="mb-6">
           <h3 className="font-bold text-cyan-glow mb-2">Tech Stack:</h3>
@@ -373,12 +475,16 @@ const ContactForm: React.FC = () => {
                 // On success, send an auto-reply to the user.
                 const userName = (currentForm.elements.namedItem('from_name') as HTMLInputElement)?.value;
                 const userEmail = (currentForm.elements.namedItem('from_email') as HTMLInputElement)?.value;
+                const userMessage = (currentForm.elements.namedItem('message') as HTMLTextAreaElement)?.value;
 
-                // Note: The auto-reply template (`template_kyh7ygy`) in EmailJS must be configured 
-                // in its Settings tab to use `{{to_email}}` in the "To Email" field.
+                // The auto-reply template (`template_kyh7ygy`) in EmailJS is configured to use these parameters.
+                // 'email' is used in the "To Email" field.
+                // 'name', 'message', and 'reply_to' are used in the template body and settings.
                 const autoReplyParams = {
-                    from_name: userName,
-                    to_email: userEmail,
+                    name: userName,
+                    email: userEmail,
+                    message: userMessage,
+                    reply_to: 'sahilgiri59902@gmail.com',
                 };
                 
                 emailjs.send(serviceID, autoReplyTemplateID, autoReplyParams, publicKey)
@@ -410,7 +516,6 @@ const ContactForm: React.FC = () => {
         >
             {!submitted ? (
             <>
-                <h2 className="text-4xl font-orbitron mb-2 text-blue-glow">Synaptic Connection</h2>
                 <p className="text-white/70 mb-8 font-space-grotesk">Send a signal. Let's create something amazing together.</p>
                 <form ref={form} onSubmit={handleSubmit} className="flex flex-col gap-4 font-jetbrains-mono">
                     <input type="text" name="from_name" placeholder="Name" required className="bg-black/50 border border-blue-glow/50 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-glow" />
@@ -440,7 +545,7 @@ const PageTitle: React.FC = () => {
     const title = pageTitles[currentPage];
 
     return (
-        <div className="fixed top-8 left-1/2 -translate-x-1/2 pointer-events-none z-20">
+        <div className="fixed top-6 md:top-8 left-1/2 -translate-x-1/2 pointer-events-none z-20 w-full px-4">
             <AnimatePresence>
                 {title && (
                     <motion.div
@@ -451,7 +556,7 @@ const PageTitle: React.FC = () => {
                         transition={{ duration: 0.5 }}
                         className="flex flex-col items-center"
                     >
-                        <h2 className="text-4xl font-orbitron text-cyan-glow text-center tracking-widest uppercase pb-2">
+                        <h2 className="text-2xl md:text-4xl font-orbitron text-cyan-glow text-center tracking-widest uppercase pb-2">
                             {title}
                         </h2>
                         <div className="h-[2px] w-32 bg-cyan-glow glow-button" />
@@ -469,13 +574,14 @@ const UI: React.FC = () => {
   return (
     <div className="fixed inset-0 z-10 pointer-events-none">
       <PageTitle />
-      <div className="w-full h-full flex items-center justify-center pointer-events-auto pt-24 pb-24">
+      <div className="w-full h-full flex items-center justify-center pointer-events-auto pt-20 md:pt-24 pb-24">
         <AnimatePresence mode="wait">
             {currentPage === 'home' && <HomePage key="home" />}
             {currentPage === 'skills' && <SkillsPage key="skills" />}
             {currentPage === 'projects' && <ProjectsPage key="projects" />}
             {currentPage === 'achievements' && <AchievementsPage key="achievements" />}
             {currentPage === 'education' && <EducationPage key="education" />}
+            {currentPage === 'resume' && <ResumePage key="resume" />}
             {currentPage === 'contact' && <ContactForm key="contact" />}
         </AnimatePresence>
       </div>

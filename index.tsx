@@ -1,4 +1,5 @@
-
+// Fix: Import 'types.ts' at the application root to globally apply react-three-fiber JSX type augmentations.
+import './types';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

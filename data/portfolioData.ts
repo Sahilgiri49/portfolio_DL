@@ -1,15 +1,15 @@
 import type { Skill, Project, Achievement, Education } from '../types';
 
 export const skills: Skill[] = [
-  { id: 'python', name: 'Python', experience: '3+ Years', usedIn: 'AI/ML, Backend Dev' },
-  { id: 'pytorch', name: 'PyTorch', experience: '2+ Years', usedIn: 'Deep Learning Models' },
-  { id: 'fastapi', name: 'FastAPI', experience: '2+ Years', usedIn: 'High-performance APIs' },
+  { id: 'python', name: 'Python', experience: '3+ Years', usedIn: 'AI/ML, Data Analysis, Backend Dev' },
+  { id: 'ml', name: 'Machine Learning', experience: '3+ Years', usedIn: 'Scikit-learn, Pandas, NumPy' },
+  { id: 'blockchain', name: 'Blockchain / Web3', experience: '1+ Year', usedIn: 'Smart Contracts, dApps' },
+  { id: 'mern', name: 'MERN Stack', experience: '2+ Years', usedIn: 'Full-stack web applications' },
   { id: 'react', name: 'React.js', experience: '2+ Years', usedIn: 'Dynamic UIs, Portfolios' },
-  { id: 'sql', name: 'SQL / Oracle', experience: '2+ Years', usedIn: 'Database Management' },
-  { id: 'ml', name: 'Machine Learning', experience: '3+ Years', usedIn: 'Predictive Modeling' },
-  { id: 'dl', name: 'Deep Learning', experience: '2+ Years', usedIn: 'Image & Data Analysis' },
-  { id: 'dataviz', name: 'Data Visualization', experience: '3+ Years', usedIn: 'Matplotlib, Seaborn' },
-  { id: 'blockchain', name: 'Blockchain / Web3', experience: '1+ Year', usedIn: 'Smart Contracts' },
+  { id: 'dl', name: 'Deep Learning', experience: '2+ Years', usedIn: 'PyTorch, Image & Data Analysis' },
+  { id: 'comm', name: 'Teamwork & Communication', experience: 'Hackathon-Proven', usedIn: 'Leading teams and presenting projects' },
+  { id: 'design', name: 'Designing', experience: '1+ Year', usedIn: 'UI/UX, User-Centric Flows' },
+  { id: 'pm', name: 'Project Management', experience: '2+ Years', usedIn: 'Agile, Prototyping' },
 ];
 
 export const projects: Project[] = [
@@ -104,16 +104,16 @@ export const projects: Project[] = [
 ];
 
 export const achievements: Achievement[] = [
-  { id: 'hacksphere', title: '🏆 HackSphere 2025', details: 'Won first place in the Blockchain + AI Fusion track for the "Smart Contract Copilot" project.', proof: '#' },
-  { id: 'internship', title: '🧩 Internship — IT Networkz', details: 'AI Internship using Python. Gained practical experience in data analysis, model building, and end-to-end AI development processes.', proof: '#' },
-  { id: 'diploma', title: '🎓 Diploma in AIML (Ongoing)', details: 'Currently in the 2nd year of my diploma, maintaining a high GPA and focusing on advanced AI concepts.' },
-  { id: 'team', title: '⚓ Team Conquerors', details: 'Led and collaborated in multiple hackathons, demonstrating strong problem-solving and teamwork under pressure.' },
-  { id: 'goal', title: '🎯 Goal: AI Engineer Role', details: 'Actively seeking a challenging role as an AI Engineer to apply my skills in building innovative AI solutions. Target: ₹1L/month.' },
+  { id: 'hackathons', title: '🏆 Multiple Hackathon Winner', details: 'Participated in and led teams through multiple state and national-level hackathons, demonstrating strong problem-solving, teamwork, and rapid prototyping skills.', proof: '#' },
+  { id: 'internship', title: '🧩 AI Internship — IT Networkz (2024)', details: 'Gained practical experience in data analysis, model building with Pandas, NumPy, Scikit-learn, and end-to-end AI development processes.', proof: '#' },
+  { id: 'vote-counting', title: '🗳️ Vote Counting Assistant — Election Commission (2024)', details: 'Assisted in the accurate counting and verification of votes during local elections, ensuring a transparent and smooth electoral process with high attention to detail.' },
+  { id: 'certifications', title: '🏅 Multiple Certifications', details: 'Recognized for excellence in technology, UI/UX design, sports, and visual arts, reflecting a well-rounded and consistent skill set.'},
+  { id: 'goal', title: '🎯 Goal: AI Engineer Role', details: 'Actively seeking a challenging role as an AI Engineer to apply my skills in building innovative AI solutions.' },
 ];
 
 export const education: Education[] = [
-  { id: 'edu-2023', year: '2023', title: 'Started Diploma in AIML', institution: 'Government Polytechnic, Nagpur', details: 'Began my specialized journey into Artificial Intelligence and Machine Learning, building a strong foundation.' },
-  { id: 'edu-2024', year: '2024', title: 'Internship at IT Networkz', institution: 'Professional Experience', details: 'Applied academic knowledge to real-world problems, collaborating on a capstone project and strengthening understanding of AI applications.' },
-  { id: 'edu-2025', year: '2025', title: 'AI + Blockchain Research', institution: 'Hackathons & Projects', details: 'Focused on the intersection of AI and Blockchain, leading to award-winning projects and innovative solutions.' },
-  { id: 'edu-future', year: 'Future', title: 'Aim for B.Tech in AI', institution: 'Future Goal', details: 'Aspire to pursue a Bachelor of Technology in AI Engineering from a top-tier institution like an IIT to deepen my expertise.' },
+  { id: 'edu-diploma', year: '2023 - 2026 (Ongoing)', title: 'Diploma in AI & Machine Learning', institution: 'Government Polytechnic, Nagpur', details: 'Pursuing a comprehensive diploma focused on core AI/ML concepts, practical applications, and building a strong theoretical foundation.' },
+  { id: 'edu-ssc', year: '2023', title: 'Secondary School Certificate (SSC)', institution: 'NMC School, Nagpur', details: 'Completed secondary education with a focus on science and mathematics, laying the groundwork for a career in technology.' },
+  { id: 'edu-experience', year: '2024', title: 'Professional Experience', institution: 'IT Networkz & Election Commission', details: 'Gained hands-on industry experience through an AI internship and demonstrated responsibility in a public service role with the election commission.' },
+  { id: 'edu-future', year: 'Future', title: 'Aspiring for B.Tech in AI', institution: 'Future Goal', details: 'Plan to pursue a Bachelor of Technology in AI Engineering from a top-tier institution to deepen expertise and contribute to cutting-edge research.' },
 ];

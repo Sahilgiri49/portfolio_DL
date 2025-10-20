@@ -1,4 +1,5 @@
-
+// Fix: Import global types to apply react-three-fiber JSX augmentations.
+import '../types';
 import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Points, PointMaterial, Line, Html } from '@react-three/drei';
@@ -189,8 +190,13 @@ const NeuralNetwork: React.FC = () => {
         { id: 'contact-1', position: new THREE.Vector3(-3, 0, -15), type: 'contact' },
         { id: 'contact-2', position: new THREE.Vector3(3, 0, -15), type: 'contact' },
       ];
+      
+      const resumeNodes = [
+        { id: 'resume-1', position: new THREE.Vector3(-8, 8, 8), type: 'resume' },
+        { id: 'resume-2', position: new THREE.Vector3(8, -8, 8), type: 'resume' },
+      ];
 
-      return [...skillNodes, ...projectNodes, ...achievementNodes, ...educationNodes, ...contactNodes];
+      return [...skillNodes, ...projectNodes, ...achievementNodes, ...educationNodes, ...contactNodes, ...resumeNodes];
     }, []);
 
     return (
@@ -219,6 +225,7 @@ const viewCenters: { [key: string]: THREE.Vector3 } = {
   achievements: new THREE.Vector3(15, 0, 5),
   education: new THREE.Vector3(0, -15, 5),
   contact: new THREE.Vector3(0, 0, -15),
+  resume: new THREE.Vector3(0, 0, 8),
 };
 
 const cameraPositions: { [key: string]: THREE.Vector3 } = {
@@ -228,6 +235,7 @@ const cameraPositions: { [key: string]: THREE.Vector3 } = {
   achievements: new THREE.Vector3(15, 0, 15),
   education: new THREE.Vector3(0, -15, 15),
   contact: new THREE.Vector3(0, 0, -5),
+  resume: new THREE.Vector3(0, 0, 18),
 };
 
 const CameraRig: React.FC = () => {

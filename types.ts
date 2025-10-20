@@ -1,5 +1,15 @@
+import type { ThreeElements } from '@react-three/fiber';
 
-export type Page = 'home' | 'skills' | 'projects' | 'achievements' | 'education' | 'contact';
+// Fix: Augment the global JSX namespace to include react-three-fiber's intrinsic elements.
+// This is placed in a central types file to ensure it's available globally and fixes
+// errors for components like `<mesh>`, `<group>`, `<sphereGeometry>`, etc. across the app.
+declare global {
+  namespace JSX {
+    interface IntrinsicElements extends ThreeElements {}
+  }
+}
+
+export type Page = 'home' | 'skills' | 'projects' | 'achievements' | 'education' | 'contact' | 'resume';
 
 export interface Skill {
   id: string;
