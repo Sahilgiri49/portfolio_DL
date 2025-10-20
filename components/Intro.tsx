@@ -1,9 +1,19 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
+// Fix: Import `ThreeElements` to make its types available for augmenting JSX.IntrinsicElements.
+// FIX: Removed `type` keyword from `ThreeElements` import to ensure it's available for global JSX namespace augmentation.
+import { Canvas, useFrame, ThreeElements } from '@react-three/fiber';
 import { Points, PointMaterial, Line } from '@react-three/drei';
 import { EffectComposer, Bloom, Glitch } from '@react-three/postprocessing';
 import * as THREE from 'three';
+
+// Fix: Augment the global JSX namespace to include react-three-fiber's intrinsic elements,
+// resolving TypeScript errors for components like <group>, <ambientLight>, etc.
+declare global {
+  namespace JSX {
+    interface IntrinsicElements extends ThreeElements {}
+  }
+}
 
 // --- 3D Components for the Intro Scene ---
 
@@ -132,9 +142,12 @@ const Intro: React.FC<{ onFinished: () => void }> = ({ onFinished }) => {
                 
                 <AnimatePresence>
                     {stage === 'flash' && (
-                        <motion.group initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                        // Fix: `motion.group` is not a valid component when using `framer-motion` for DOM.
+                        // It is a feature of `framer-motion-3d`. Replaced with a standard `group` to
+                        // resolve the compilation error. Note: this removes the exit animation.
+                        <group>
                             <Thunder />
-                        </motion.group>
+                        </group>
                     )}
                 </AnimatePresence>
 

@@ -215,7 +215,7 @@ const HomePage: React.FC = () => {
     >
       <div className="text-center md:text-left font-orbitron order-2 md:order-1">
         <h1 className="text-5xl md:text-7xl font-bold mb-4">
-          <span className="text-glow-cyan">SAHIL GIRI</span>
+          <span className="text-glow-white">SAHIL GIRI</span>
         </h1>
         <p className="text-lg md:text-2xl text-cyan-glow mb-8 font-space-grotesk h-8">
           <AnimatePresence mode="wait">
