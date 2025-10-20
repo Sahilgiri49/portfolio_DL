@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store/useStore';
 import type { Page, Project } from '../types';
-import { Home, BrainCircuit, Code, Trophy, GraduationCap, Send, ExternalLink, Instagram, Linkedin, Twitter, Github } from 'lucide-react';
+import { Home, BrainCircuit, Code, Trophy, GraduationCap, Send, ExternalLink, Instagram, Linkedin, Twitter, Github, Download } from 'lucide-react';
 import { skills, projects, achievements, education } from '../data/portfolioData';
 import AIAgent from './AIAgent';
 
@@ -58,25 +59,48 @@ const ProjectsPage: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="w-full h-full flex items-center justify-center p-4 md:p-8"
         >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full h-[80vh] overflow-y-auto p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 max-w-6xl w-full h-[80vh] overflow-y-auto p-4">
                 {projects.map((project, i) => (
-                    <motion.div
-                        key={project.id}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="bg-black/50 border border-cyan-glow/30 p-6 rounded-lg flex flex-col justify-between cursor-pointer hover:border-cyan-glow hover:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all"
-                        onClick={() => setActiveProject(project)}
-                    >
-                        <div>
-                            <p className="text-sm text-cyan-glow/80 font-space-grotesk mb-1">{project.cluster}</p>
-                            <h3 className="text-xl font-bold text-cyan-glow mb-3 font-orbitron">{project.name}</h3>
-                            <p className="text-white/70 text-sm mb-4">{project.description}</p>
+                   <div key={project.id} className="flex flex-col items-center gap-4">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="group relative bg-black/50 border border-cyan-glow/30 rounded-lg overflow-hidden w-full aspect-[4/3]"
+                        >
+                           <img 
+                                src={project.image} 
+                                alt={project.name} 
+                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                           />
+                           <div className="absolute inset-0 bg-black/80 flex flex-col p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                               <div className="flex-grow overflow-hidden">
+                                    <p className="text-sm text-cyan-glow/80 font-space-grotesk mb-1">{project.cluster}</p>
+                                    <h3 className="text-lg font-bold text-cyan-glow mb-2 font-orbitron">{project.name}</h3>
+                                    <p className="text-white/70 text-xs mb-2">{project.description}</p>
+                               </div>
+                               <div className="flex flex-wrap gap-1 mt-2">
+                                    {project.tech.slice(0, 3).map(t => <span key={t} className="bg-cyan-glow/10 text-cyan-glow px-2 py-1 text-[10px] rounded-full">{t}</span>)}
+                               </div>
+                               <button 
+                                 onClick={() => setActiveProject(project)}
+                                 className="w-full mt-4 text-center bg-cyan-glow/20 text-cyan-glow py-2 rounded-md text-sm font-bold hover:bg-cyan-glow/40 transition-colors"
+                               >
+                                 View Details
+                               </button>
+                           </div>
+                        </motion.div>
+                        <div className="flex items-center gap-8">
+                            <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="flex items-center gap-2 text-cyan-glow/70 hover:text-cyan-glow transition-transform hover:scale-110">
+                                <Github size={20} />
+                                <span className="text-sm font-jetbrains-mono">GitHub</span>
+                            </a>
+                            <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label="Live Demo" className="flex items-center gap-2 text-cyan-glow/70 hover:text-cyan-glow transition-transform hover:scale-110">
+                                <ExternalLink size={20} />
+                                <span className="text-sm font-jetbrains-mono">Demo</span>
+                            </a>
                         </div>
-                        <div className="flex flex-wrap gap-2 mt-auto">
-                            {project.tech.slice(0, 3).map(t => <span key={t} className="bg-cyan-glow/10 text-cyan-glow px-2 py-1 text-xs rounded-full">{t}</span>)}
-                        </div>
-                    </motion.div>
+                   </div>
                 ))}
             </div>
         </motion.div>
@@ -171,10 +195,10 @@ const Navbar: React.FC = () => {
 
 const HomePage: React.FC = () => {
   const { setCurrentPage } = useStore();
-  const [skillIndex, setSkillIndex] = useState(0);
+  const [skillIndex, setSkillIndex] = React.useState(0);
   const skillsToAnimate = ['AI Developer', 'Innovator', 'Problem Solver', 'Deep Learning Engineer', 'Creative Coder'];
 
-  useEffect(() => {
+  React.useEffect(() => {
       const interval = setInterval(() => {
         setSkillIndex((prevIndex) => (prevIndex + 1) % skillsToAnimate.length);
       }, 2000);
@@ -207,9 +231,14 @@ const HomePage: React.FC = () => {
               </motion.span>
           </AnimatePresence>
         </p>
-        <p className="text-md md:text-xl text-white/80 mb-12 font-jetbrains-mono">
-          Welcome to my MindSpace
-        </p>
+        <div className="mb-12">
+          <p className="text-md md:text-xl text-white/80 mb-4 font-jetbrains-mono">
+            Welcome to my MindSpace
+          </p>
+          <p className="text-sm md:text-base text-white/70 font-space-grotesk max-w-xl mx-auto md:mx-0">
+            A dedicated AI/ML student with hands-on experience in solving real-world problems through multiple hackathons and internships.
+          </p>
+        </div>
         <div className="flex justify-center md:justify-start space-x-6">
           <button
             onClick={() => setCurrentPage('skills')}
@@ -224,7 +253,7 @@ const HomePage: React.FC = () => {
             Send Signal
           </button>
         </div>
-         <div className="flex justify-center space-x-8 mt-10">
+         <div className="flex justify-center md:justify-start space-x-8 mt-10">
             <a href="https://www.instagram.com/sahill.___17/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-cyan-glow/70 hover:text-cyan-glow transition-transform hover:scale-110">
                 <Instagram size={28} />
             </a>
@@ -240,20 +269,36 @@ const HomePage: React.FC = () => {
         </div>
       </div>
       
-      <motion.div
-        className="relative w-48 h-48 md:w-72 md:h-72 flex-shrink-0 order-1 md:order-2"
-        animate={{ y: [-5, 5] }}
-        transition={{ repeat: Infinity, repeatType: 'reverse', duration: 4, ease: 'easeInOut' }}
-      >
-        <div className="absolute inset-0 rounded-full bg-blue-glow blur-3xl opacity-60 animate-pulse-slow"></div>
-        <img
-            src="https://pbs.twimg.com/profile_images/1906565509916803072/dTJQW0cr_400x400.jpg"
-            alt="Sahil Giri"
-            className="relative w-full h-full object-cover rounded-full border-4 border-blue-glow/80 filter grayscale contrast-125"
-            style={{ boxShadow: '0 0 15px rgba(37, 99, 235, 0.8), 0 0 25px rgba(37, 99, 235, 0.6)' }}
-        />
-        <div className="absolute inset-0 bg-blue-glow/30 rounded-full mix-blend-color pointer-events-none"></div>
-    </motion.div>
+      <div className="flex flex-col items-center gap-6 order-1 md:order-2">
+        <motion.div
+          className="relative w-48 h-48 md:w-72 md:h-72 flex-shrink-0"
+          animate={{ y: [-5, 5] }}
+          transition={{ repeat: Infinity, repeatType: 'reverse', duration: 4, ease: 'easeInOut' }}
+        >
+          <div className="absolute inset-0 rounded-full bg-blue-glow blur-3xl opacity-60 animate-pulse-slow"></div>
+          <img
+              src="https://pbs.twimg.com/profile_images/1906565509916803072/dTJQW0cr_400x400.jpg"
+              alt="Sahil Giri"
+              className="relative w-full h-full object-cover rounded-full border-4 border-blue-glow/80 filter grayscale contrast-125"
+              style={{ boxShadow: '0 0 15px rgba(37, 99, 235, 0.8), 0 0 25px rgba(37, 99, 235, 0.6)' }}
+          />
+          <div className="absolute inset-0 bg-blue-glow/30 rounded-full mix-blend-color pointer-events-none"></div>
+        </motion.div>
+
+        <motion.a
+          href="/resume.png"
+          download="Sahil_Giri_Resume.png"
+          className="flex items-center gap-3 font-bold text-lg text-blue-glow border-2 border-blue-glow px-8 py-3 rounded-full transition-all duration-300 hover:bg-blue-glow/20 transform hover:scale-105"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          aria-label="Download CV"
+        >
+          <Download size={20} />
+          Download CV
+        </motion.a>
+      </div>
+
     </motion.div>
   );
 };
@@ -264,7 +309,7 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 pointer-events-auto"
       onClick={onClose}
     >
       <motion.div
@@ -295,7 +340,7 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 };
 
 const ContactForm: React.FC = () => {
-    const [submitted, setSubmitted] = useState(false);
+    const [submitted, setSubmitted] = React.useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();

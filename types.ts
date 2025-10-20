@@ -16,6 +16,7 @@ export interface Project {
   tech: string[];
   github: string;
   live: string;
+  image: string;
   achievements: string;
 }
 

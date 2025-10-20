@@ -19,8 +19,9 @@ export const projects: Project[] = [
     name: 'SAR-Vision', 
     description: 'A project utilizing Synthetic Aperture Radar (SAR) for advanced vision applications, likely involving object detection or environmental monitoring.',
     tech: ['Python', 'PyTorch', 'OpenCV'],
-    github: 'https://github.com/sahilgiri-sg',
-    live: 'https://sahil-giri.netlify.app/',
+    github: 'https://github.com/Sahilgiri49/SAR-vision',
+    live: 'https://sahilgiri49.github.io/SAR-vision/',
+    image: 'https://pbs.twimg.com/media/Gndh9pHW4AAvO_A?format=jpg&name=large',
     achievements: 'Developed for a national-level hackathon.'
   },
   { 
@@ -29,8 +30,9 @@ export const projects: Project[] = [
     name: 'Smart Contract Copilot', 
     description: 'An AI-powered assistant to help developers write, debug, and audit smart contracts, improving security and efficiency.',
     tech: ['Python', 'LLMs', 'Solidity'],
-    github: 'https://github.com/sahilgiri-sg',
-    live: 'https://sahil-giri.netlify.app/',
+    github: 'https://github.com/Sahilgiri49/Smart-Contract-Copilot',
+    live: 'https://www.youtube.com/watch?v=l6dWKZIxnRQ',
+    image: 'https://pbs.twimg.com/media/Gndh9jmXUAA1kHc?format=jpg&name=large',
     achievements: 'Winner at HackSphere 2025.'
   },
   { 
@@ -39,8 +41,9 @@ export const projects: Project[] = [
     name: 'Identity Verification System', 
     description: 'A secure system using AI for facial recognition and document analysis to verify user identities in real-time.',
     tech: ['Python', 'OpenCV', 'FastAPI'],
-    github: 'https://github.com/sahilgiri-sg',
-    live: 'https://sahil-giri.netlify.app/',
+    github: 'https://github.com/Sahilgiri49/identi-verse-secure-flow',
+    live: 'https://identity-verify-1.netlify.app/',
+    image: 'https://pbs.twimg.com/media/Gn2bS-aWgAAimKW?format=jpg&name=900x900',
     achievements: 'Implemented as a core security feature.'
   },
   { 
@@ -49,8 +52,9 @@ export const projects: Project[] = [
     name: 'Blockchain Certificate Verification', 
     description: 'A decentralized application to issue and verify academic or professional certificates on the blockchain, preventing fraud.',
     tech: ['Solidity', 'React.js', 'Web3.js'],
-    github: 'https://github.com/sahilgiri-sg',
-    live: 'https://sahil-giri.netlify.app/',
+    github: 'https://github.com/Sahilgiri49/Cert-Blockchain',
+    live: 'https://youtu.be/I_ALu-kc2Jo?si=9kZT73Dd9ozYLiK9',
+    image: 'https://raw.githubusercontent.com/Sahilgiri49/scr/main/Screenshot%202025-10-20%20101222.png',
     achievements: 'Presented at a tech conference.'
   },
   { 
@@ -59,9 +63,43 @@ export const projects: Project[] = [
     name: 'Restro Table Booking', 
     description: 'A comprehensive table booking system for restaurants, possibly with predictive analytics for demand forecasting.',
     tech: ['Python', 'Scikit-learn', 'Flask'],
-    github: 'https://github.com/sahilgiri-sg',
-    live: 'https://sahil-giri.netlify.app/',
+    github: 'https://github.com/Sahilgiri49/table_booking-restro',
+    live: 'https://ez-restro.netlify.app/',
+    image: 'https://raw.githubusercontent.com/Sahilgiri49/scr/main/Screenshot%202025-10-20%20100932.png',
     achievements: 'Personal project demonstrating full-stack capabilities.'
+  },
+  { 
+    id: 'fire-free-hub', 
+    cluster: 'AI Applications', 
+    name: 'Fire Free Arena Hub', 
+    description: 'Built a platform to connect sponsors with Free Fire tournaments, enabling sponsor registration and promotion tracking.',
+    tech: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Tailwind CSS'],
+    github: 'https://github.com/Sahilgiri49/fire-free-arena-hub',
+    live: 'https://fire-free-arena-hub.vercel.app/',
+    image: 'https://pbs.twimg.com/media/GrZBwe0XAAA013Y?format=jpg&name=large',
+    achievements: 'Demonstrates full-stack web development skills.'
+  },
+  { 
+    id: 'ticket-booking', 
+    cluster: 'AI Applications', 
+    name: 'Ticket Booking System', 
+    description: 'A web-based platform designed to facilitate online ticket bookings for various events, integrating payment systems and real-time availability.',
+    tech: ['React', 'Node.js', 'Payment Integration', 'Real-time Updates', 'Database Management'],
+    github: 'https://github.com/Sahilgiri49/Ticketing-GPT-with-backend',
+    live: 'https://www.linkedin.com/posts/activity-7288430291445039104-DCyP?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEP0RQcBWL7J2jy6bEK4Za8GGMpdg5PyWho',
+    image: 'https://raw.githubusercontent.com/Sahilgiri49/scr/main/Screenshot%202025-10-20%20101332.png',
+    achievements: 'Developed at Vincent Palloti Nagpur Hackathon.'
+  },
+  { 
+    id: 'ai-dev-project', 
+    cluster: 'Data Science', 
+    name: 'AI Development Capstone', 
+    description: 'Completed a capstone project showcasing end-to-end AI development processes. Used Python libraries like Pandas, NumPy, and Scikit-learn for data analysis and model building.',
+    tech: ['Python', 'Pandas', 'NumPy', 'Scikit-learn'],
+    github: 'https://github.com/Sahilgiri49/LLM-model',
+    live: 'https://youtu.be/PPokMwolnBo?si=aeUCbJEQox57ar1N',
+    image: 'https://pbs.twimg.com/media/Gndh9jjWEAAT_Un?format=jpg&name=large',
+    achievements: 'Capstone project for AI Internship.'
   },
 ];
 
