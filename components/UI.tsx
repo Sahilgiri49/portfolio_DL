@@ -215,7 +215,7 @@ const HomePage: React.FC = () => {
     >
       <div className="text-center md:text-left font-orbitron order-2 md:order-1">
         <h1 className="text-5xl md:text-7xl font-bold mb-4">
-          <span className="text-white">SAHIL GIRI</span>
+          <span className="text-glow-cyan">SAHIL GIRI</span>
         </h1>
         <p className="text-lg md:text-2xl text-cyan-glow mb-8 font-space-grotesk h-8">
           <AnimatePresence mode="wait">
@@ -387,16 +387,19 @@ const PageTitle: React.FC = () => {
         <div className="fixed top-8 left-1/2 -translate-x-1/2 pointer-events-none z-20">
             <AnimatePresence>
                 {title && (
-                    <motion.h2
+                    <motion.div
                         key={title}
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.5 }}
-                        className="text-3xl font-orbitron text-cyan-glow/80 text-center"
+                        className="flex flex-col items-center"
                     >
-                        {title}
-                    </motion.h2>
+                        <h2 className="text-4xl font-orbitron text-cyan-glow text-center tracking-widest uppercase pb-2">
+                            {title}
+                        </h2>
+                        <div className="h-[2px] w-32 bg-cyan-glow glow-button" />
+                    </motion.div>
                 )}
             </AnimatePresence>
         </div>
