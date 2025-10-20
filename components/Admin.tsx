@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { auth, provider, db } from '../firebase';
 import { signInWithPopup, signOut, onAuthStateChanged, User } from 'firebase/auth';
@@ -161,7 +162,7 @@ const AdminDashboard: React.FC<{ user: User }> = ({ user }) => {
     }
 
     return (
-        <div className="p-8 max-w-7xl mx-auto font-jetbrains-mono">
+        <div className="h-screen overflow-y-auto p-8 max-w-7xl mx-auto font-jetbrains-mono">
              <header className="flex justify-between items-center mb-8 pb-4 border-b border-cyan-glow/30">
                 <div>
                     <h1 className="text-4xl font-orbitron text-glow-white">Admin Panel</h1>

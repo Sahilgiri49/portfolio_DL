@@ -1,5 +1,6 @@
-// Fix: Import global types to apply react-three-fiber JSX augmentations.
-import '../types';
+// Fix: The global types for react-three-fiber are imported in `index.tsx` and do not
+// need to be re-imported here. This resolves issues with JSX elements like `<group>`
+// not being recognized.
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas, useFrame, RootState } from '@react-three/fiber';
