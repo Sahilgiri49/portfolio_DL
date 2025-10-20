@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../store/useStore';
 import type { Page, Project } from '../types';
 import { Home, BrainCircuit, Code, Trophy, GraduationCap, Send, ExternalLink, Instagram, Linkedin, Twitter, Github, FileText } from 'lucide-react';
-import { skills, projects, achievements, education } from '../data/portfolioData';
+import { skills, achievements, education } from '../data/portfolioData';
 import AIAgent from './AIAgent';
 
 // Declare emailjs for TypeScript since it's loaded from a script tag
@@ -56,7 +56,7 @@ const SkillsPage: React.FC = () => (
 );
 
 const ProjectsPage: React.FC = () => {
-    const { setActiveProject } = useStore();
+    const { setActiveProject, projects } = useStore();
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}

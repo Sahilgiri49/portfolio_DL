@@ -1,4 +1,9 @@
-import type { ThreeElements } from '@react-three/fiber';
+// Fix: Import React to bring the JSX namespace into scope, allowing for augmentation.
+import * as React from 'react';
+
+// Fix: Use a regular import instead of `import type` to ensure the global JSX
+// namespace augmentation is correctly applied by the TypeScript compiler.
+import { ThreeElements } from '@react-three/fiber';
 
 // Fix: Augment the global JSX namespace to include react-three-fiber's intrinsic elements.
 // This is placed in a central types file to ensure it's available globally and fixes

@@ -1,8 +1,8 @@
 // Fix: Import global types to apply react-three-fiber JSX augmentations.
 import '../types';
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, RootState } from '@react-three/fiber';
 import { Points, PointMaterial, Line } from '@react-three/drei';
 import { EffectComposer, Bloom, Glitch } from '@react-three/postprocessing';
 import * as THREE from 'three';
@@ -104,6 +104,22 @@ const CameraRig = ({ isZooming }: { isZooming: boolean }) => {
 const Intro: React.FC<{ onFinished: () => void }> = ({ onFinished }) => {
     const [stage, setStage] = useState('start');
     const [showSkip, setShowSkip] = useState(false);
+    const [webglError, setWebglError] = useState(false);
+
+    const handleCanvasCreated = useCallback((state: RootState) => {
+      const canvas = state.gl.domElement;
+      const handleContextLost = (e: Event) => {
+        e.preventDefault();
+        console.warn("WebGL Context Lost");
+        setWebglError(true);
+      };
+      const handleContextRestored = () => {
+        console.log("WebGL Context Restored");
+        setWebglError(false);
+      };
+      canvas.addEventListener('webglcontextlost', handleContextLost, false);
+      canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
+    }, []);
 
     useEffect(() => {
         const timers: ReturnType<typeof setTimeout>[] = [];
@@ -126,7 +142,7 @@ const Intro: React.FC<{ onFinished: () => void }> = ({ onFinished }) => {
     return (
         <div className="fixed inset-0 bg-black z-[100] overflow-hidden">
             {/* 3D Canvas for the background effects */}
-            <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
+            <Canvas camera={{ position: [0, 0, 10], fov: 75 }} onCreated={handleCanvasCreated}>
                 <ambientLight intensity={0.2} />
                 <pointLight position={[0,0,10]} color="cyan" intensity={5} />
 
@@ -200,6 +216,17 @@ const Intro: React.FC<{ onFinished: () => void }> = ({ onFinished }) => {
                     />
                 )}
             </AnimatePresence>
+
+            {webglError && (
+                <div className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-black/90 text-cyan-glow font-jetbrains-mono">
+                    <div className="animate-pulse-slow text-2xl mb-4">
+                        Connection Interrupted
+                    </div>
+                    <p className="text-white/80">
+                        Initializing neural link failed. Please refresh.
+                    </p>
+                </div>
+            )}
         </div>
     );
 };

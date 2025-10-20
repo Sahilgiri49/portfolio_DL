@@ -1,12 +1,12 @@
 // Fix: Import global types to apply react-three-fiber JSX augmentations.
 import '../types';
-import React, { useRef, useMemo, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
+import { Canvas, useFrame, useThree, RootState } from '@react-three/fiber';
 import { Points, PointMaterial, Line, Html } from '@react-three/drei';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { useStore } from '../store/useStore';
-import { skills, projects, achievements, education } from '../data/portfolioData';
+import { skills, achievements, education } from '../data/portfolioData';
 
 // Configuration
 const NODE_COUNT = 200;
@@ -44,7 +44,7 @@ const FloatingParticles: React.FC = () => {
 const NeuronNode: React.FC<{ node: any; type: string }> = ({ node, type }) => {
   const ref = useRef<THREE.Mesh>(null!);
   const [isHovered, setIsHovered] = useState(false);
-  const { setHoveredNode, setActiveProject } = useStore();
+  const { setHoveredNode, setActiveProject, projects } = useStore();
   
   useFrame((_, delta) => {
     const pulse = Math.sin(_.clock.getElapsedTime() * 2 + node.position.x) * 0.1 + 0.9;
@@ -109,6 +109,8 @@ const NeuronNode: React.FC<{ node: any; type: string }> = ({ node, type }) => {
 };
 
 const NeuralNetwork: React.FC = () => {
+    const projects = useStore(state => state.projects);
+
     const { nodes, connections } = useMemo(() => {
         const tempNodes = Array.from({ length: NODE_COUNT }, (_, i) => ({
             id: `bg-node-${i}`,
@@ -197,7 +199,7 @@ const NeuralNetwork: React.FC = () => {
       ];
 
       return [...skillNodes, ...projectNodes, ...achievementNodes, ...educationNodes, ...contactNodes, ...resumeNodes];
-    }, []);
+    }, [projects]);
 
     return (
         <group>
@@ -258,17 +260,46 @@ const CameraRig: React.FC = () => {
 
 
 const Scene: React.FC = () => {
+  const [webglError, setWebglError] = useState(false);
+
+  const handleCanvasCreated = useCallback((state: RootState) => {
+    const canvas = state.gl.domElement;
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      console.warn("WebGL Context Lost");
+      setWebglError(true);
+    };
+    const handleContextRestored = () => {
+      console.log("WebGL Context Restored");
+      setWebglError(false);
+    };
+    canvas.addEventListener('webglcontextlost', handleContextLost, false);
+    canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
+  }, []);
+
   return (
-    <Canvas camera={{ position: [0, 0, 20], fov: 75 }}>
-      <ambientLight intensity={0.1} />
-      <directionalLight position={[0, 0, 5]} intensity={0.5} color="cyan" />
-      <NeuralNetwork />
-      <FloatingParticles />
-      <CameraRig />
-      <EffectComposer>
-        <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} height={300} intensity={1.5} />
-      </EffectComposer>
-    </Canvas>
+    <>
+      <Canvas camera={{ position: [0, 0, 20], fov: 75 }} onCreated={handleCanvasCreated}>
+        <ambientLight intensity={0.1} />
+        <directionalLight position={[0, 0, 5]} intensity={0.5} color="cyan" />
+        <NeuralNetwork />
+        <FloatingParticles />
+        <CameraRig />
+        <EffectComposer>
+          <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} height={300} intensity={1.5} />
+        </EffectComposer>
+      </Canvas>
+      {webglError && (
+        <div className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-black/90 text-cyan-glow font-jetbrains-mono">
+            <div className="animate-pulse-slow text-2xl mb-4">
+                Connection Interrupted
+            </div>
+            <p className="text-white/80">
+                Graphics context lost. Attempting to restore the neural link...
+            </p>
+        </div>
+      )}
+    </>
   );
 };
 
