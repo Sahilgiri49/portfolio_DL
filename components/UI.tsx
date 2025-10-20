@@ -7,6 +7,9 @@ import { Home, BrainCircuit, Code, Trophy, GraduationCap, Send, ExternalLink, In
 import { skills, projects, achievements, education } from '../data/portfolioData';
 import AIAgent from './AIAgent';
 
+// Declare emailjs for TypeScript since it's loaded from a script tag
+declare const emailjs: any;
+
 const icons: { [key in Page]: React.ReactNode } = {
   home: <Home size={24} />,
   skills: <BrainCircuit size={24} />,
@@ -340,12 +343,62 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 };
 
 const ContactForm: React.FC = () => {
+    const form = React.useRef<HTMLFormElement>(null);
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [submitted, setSubmitted] = React.useState(false);
+    const [error, setError] = React.useState<string | null>(null);
+
+    // IMPORTANT: These template IDs must exist in your EmailJS account.
+    // 'contactUsTemplateID' is for the email sent to you.
+    // 'autoReplyTemplateID' is for the confirmation email to the user.
+    const serviceID = 'service_b6lhnc5';
+    const contactUsTemplateID = 'template_b6hhuh2';
+    const autoReplyTemplateID = 'template_kyh7ygy';
+    const publicKey = 'AatovzBbBLdb2boqR';
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 5000);
+        const currentForm = form.current;
+        if (!currentForm || typeof emailjs === 'undefined') {
+            setError("Email service is not available.");
+            return;
+        };
+
+        setIsSubmitting(true);
+        setError(null);
+
+        // Send the main contact email to the portfolio owner
+        emailjs.sendForm(serviceID, contactUsTemplateID, currentForm, publicKey)
+            .then(() => {
+                // On success, send an auto-reply to the user.
+                const userName = (currentForm.elements.namedItem('from_name') as HTMLInputElement)?.value;
+                const userEmail = (currentForm.elements.namedItem('from_email') as HTMLInputElement)?.value;
+
+                // Note: The auto-reply template (`template_kyh7ygy`) in EmailJS must be configured 
+                // in its Settings tab to use `{{to_email}}` in the "To Email" field.
+                const autoReplyParams = {
+                    from_name: userName,
+                    to_email: userEmail,
+                };
+                
+                emailjs.send(serviceID, autoReplyTemplateID, autoReplyParams, publicKey)
+                    .then((response: any) => {
+                        console.log('Auto-reply sent successfully!', response.status, response.text);
+                    }, (err: any) => {
+                        // Log auto-reply error but don't bother the user with a UI message
+                        console.error('Failed to send auto-reply:', err);
+                    });
+
+                setSubmitted(true);
+                currentForm.reset();
+                setTimeout(() => setSubmitted(false), 5000);
+            }, (err: any) => {
+                console.error('EmailJS Error:', err);
+                setError('Failed to transmit signal. Please try again.');
+            })
+            .finally(() => {
+                setIsSubmitting(false);
+            });
     }
 
     return (
@@ -359,11 +412,14 @@ const ContactForm: React.FC = () => {
             <>
                 <h2 className="text-4xl font-orbitron mb-2 text-blue-glow">Synaptic Connection</h2>
                 <p className="text-white/70 mb-8 font-space-grotesk">Send a signal. Let's create something amazing together.</p>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4 font-jetbrains-mono">
-                    <input type="text" placeholder="Name" required className="bg-black/50 border border-blue-glow/50 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-glow" />
-                    <input type="email" placeholder="Email" required className="bg-black/50 border border-blue-glow/50 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-glow" />
-                    <textarea placeholder="Message" required rows={4} className="bg-black/50 border border-blue-glow/50 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-glow"></textarea>
-                    <button type="submit" className="bg-blue-glow text-black font-bold p-3 rounded-md transition hover:bg-opacity-80">Transmit Signal</button>
+                <form ref={form} onSubmit={handleSubmit} className="flex flex-col gap-4 font-jetbrains-mono">
+                    <input type="text" name="from_name" placeholder="Name" required className="bg-black/50 border border-blue-glow/50 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-glow" />
+                    <input type="email" name="from_email" placeholder="Email" required className="bg-black/50 border border-blue-glow/50 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-glow" />
+                    <textarea name="message" placeholder="Message" required rows={4} className="bg-black/50 border border-blue-glow/50 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-glow"></textarea>
+                    <button type="submit" disabled={isSubmitting} className="bg-blue-glow text-black font-bold p-3 rounded-md transition hover:bg-opacity-80 disabled:bg-gray-500 disabled:cursor-not-allowed">
+                        {isSubmitting ? 'Transmitting...' : 'Transmit Signal'}
+                    </button>
+                    {error && <p className="text-red-500 mt-2">{error}</p>}
                 </form>
             </>
             ) : (

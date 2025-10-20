@@ -1,19 +1,10 @@
+
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-// Fix: Import `ThreeElements` to make its types available for augmenting JSX.IntrinsicElements.
-// FIX: Removed `type` keyword from `ThreeElements` import to ensure it's available for global JSX namespace augmentation.
-import { Canvas, useFrame, ThreeElements } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Line } from '@react-three/drei';
 import { EffectComposer, Bloom, Glitch } from '@react-three/postprocessing';
 import * as THREE from 'three';
-
-// Fix: Augment the global JSX namespace to include react-three-fiber's intrinsic elements,
-// resolving TypeScript errors for components like <group>, <ambientLight>, etc.
-declare global {
-  namespace JSX {
-    interface IntrinsicElements extends ThreeElements {}
-  }
-}
 
 // --- 3D Components for the Intro Scene ---
 

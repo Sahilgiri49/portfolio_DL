@@ -1,20 +1,11 @@
+
 import React, { useRef, useMemo, useState, useEffect } from 'react';
-// Fix: Import `ThreeElements` to make its types available for augmenting JSX.IntrinsicElements.
-// FIX: Removed `type` keyword from `ThreeElements` import to ensure it's available for global JSX namespace augmentation.
-import { Canvas, useFrame, useThree, ThreeElements } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Points, PointMaterial, Line, Html } from '@react-three/drei';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { useStore } from '../store/useStore';
 import { skills, projects, achievements, education } from '../data/portfolioData';
-
-// Fix: Augment the global JSX namespace to include react-three-fiber's intrinsic elements,
-// resolving TypeScript errors for components like <mesh>, <group>, <sphereGeometry>, etc.
-declare global {
-  namespace JSX {
-    interface IntrinsicElements extends ThreeElements {}
-  }
-}
 
 // Configuration
 const NODE_COUNT = 200;
