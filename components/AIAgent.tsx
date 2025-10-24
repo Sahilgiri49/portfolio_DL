@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, SendHorizonal, X, Mic, MicOff, Volume2 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import type { Page } from '../types';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateSystemInstruction } from '../data/context';
 import { FemaleBotIcon } from './FemaleBotIcon';
 
@@ -67,14 +67,14 @@ const AIAgent: React.FC = () => {
   const { setCurrentPage } = useStore();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const systemInstruction = useRef(generateSystemInstruction());
-  const aiRef = useRef<GoogleGenAI | null>(null);
+  const aiRef = useRef<GoogleGenerativeAI | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
 
   useEffect(() => {
     if (isOpen) {
         // Initialize AI and AudioContext only when the chat opens
         if (!aiRef.current) {
-          aiRef.current = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+          aiRef.current = new GoogleGenerativeAI(process.env.API_KEY!);
         }
         if (!audioContextRef.current) {
           audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
@@ -110,35 +110,17 @@ const AIAgent: React.FC = () => {
   const getAIResponse = async (prompt: string): Promise<{ text: string; audio?: string }> => {
     if (!aiRef.current) throw new Error("AI not initialized");
     
-    const textModel = 'gemini-2.5-flash';
-    const textResponse = await aiRef.current.models.generateContent({
-        model: textModel,
-        contents: prompt,
-        config: {
-            systemInstruction: systemInstruction.current,
-        },
-    });
-    const text = textResponse.text;
+    const textModel = aiRef.current.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    const textResponse = await textModel.generateContent(prompt);
+    const text = textResponse.response.text();
 
     if (!isVoiceMode) {
         return { text };
     }
     
-    const ttsModel = 'gemini-2.5-flash-preview-tts';
-    const audioResponse = await aiRef.current.models.generateContent({
-        model: ttsModel,
-        contents: [{ parts: [{ text }] }],
-        config: {
-            responseModalities: ['AUDIO'],
-            speechConfig: {
-                voiceConfig: {
-                    prebuiltVoiceConfig: { voiceName: 'Kore' },
-                },
-            },
-        },
-    });
-
-    const base64Audio = audioResponse.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+    const ttsModel = aiRef.current.getGenerativeModel({ model: 'gemini-2.5-flash-preview-tts' });
+    const audioResponse = await ttsModel.generateContent(text);
+    const base64Audio = audioResponse.response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
     return { text, audio: base64Audio };
   };
 
