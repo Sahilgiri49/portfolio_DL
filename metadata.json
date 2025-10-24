@@ -1,5 +1,7 @@
 {
   "name": "AI MindSpace | Sahil Giri Portfolio",
   "description": "An interactive 3D portfolio for AI developer Sahil Giri, visualized as an explorable neural network. Built with React, Three.js, and TailwindCSS.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }

@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { auth, provider, db } from '../firebase';
 import { signInWithPopup, signOut, onAuthStateChanged, User } from 'firebase/auth';
-import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs } from 'firebase/firestore';
+// Fix: Changed to a namespace import for firestore to resolve module loading errors.
+import * as firestore from 'firebase/firestore';
 import { useStore } from '../store/useStore';
 import type { Project } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -59,10 +60,10 @@ const ProjectForm: React.FC<{
 
     try {
       if (currentProject) {
-        const projectRef = doc(db, 'projects', currentProject.id);
-        await updateDoc(projectRef, projectData);
+        const projectRef = firestore.doc(db, 'projects', currentProject.id);
+        await firestore.updateDoc(projectRef, projectData);
       } else {
-        await addDoc(collection(db, 'projects'), projectData);
+        await firestore.addDoc(firestore.collection(db, 'projects'), projectData);
       }
       onSuccess();
       onClose();
@@ -107,8 +108,8 @@ const AdminDashboard: React.FC<{ user: User }> = ({ user }) => {
 
     useEffect(() => {
         const checkAndMigrate = async () => {
-            const projectsCollection = collection(db, 'projects');
-            const projectSnapshot = await getDocs(projectsCollection);
+            const projectsCollection = firestore.collection(db, 'projects');
+            const projectSnapshot = await firestore.getDocs(projectsCollection);
 
             if (projectSnapshot.empty) {
                 console.log('Admin detected empty projects collection. Migrating from static data...');
@@ -116,7 +117,7 @@ const AdminDashboard: React.FC<{ user: User }> = ({ user }) => {
                     for (const project of staticProjects) {
                         // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         const { id, ...projectData } = project;
-                        await addDoc(projectsCollection, projectData);
+                        await firestore.addDoc(projectsCollection, projectData);
                     }
                     console.log('Migration complete. Fetching updated project list.');
                     await fetchProjects();
@@ -152,7 +153,7 @@ const AdminDashboard: React.FC<{ user: User }> = ({ user }) => {
     const handleDelete = async (id: string) => {
         if (window.confirm("Are you sure you want to delete this project?")) {
             try {
-                await deleteDoc(doc(db, "projects", id));
+                await firestore.deleteDoc(firestore.doc(db, "projects", id));
                 fetchProjects();
             } catch (error) {
                 console.error("Error deleting project:", error);

@@ -32,10 +32,11 @@ export const useStore = create<AppState>((set, get) => ({
   fetchProjects: async () => {
     // This function will be called from Admin.tsx to refresh data after CRUD operations.
     // The initial fetch is in App.tsx.
-    const { getDocs, collection } = await import('firebase/firestore');
+    // Fix: Changed dynamic import to a namespace import to resolve module loading issue.
+    const firestore = await import('firebase/firestore');
     const { db } = await import('../firebase');
-    const projectsCollection = collection(db, 'projects');
-    const projectSnapshot = await getDocs(projectsCollection);
+    const projectsCollection = firestore.collection(db, 'projects');
+    const projectSnapshot = await firestore.getDocs(projectsCollection);
     const projectsList = projectSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }) as Project);
     set({ projects: projectsList });
   },

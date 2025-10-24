@@ -1,6 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+// Fix: Changed to namespace imports for Firebase modules to resolve module resolution errors.
+import * as firebaseApp from "firebase/app";
+import * as firestore from "firebase/firestore";
+import * as firebaseAuth from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,7 +15,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const provider = new GoogleAuthProvider();
+const app = firebaseApp.initializeApp(firebaseConfig);
+export const db = firestore.getFirestore(app);
+export const auth = firebaseAuth.getAuth(app);
+export const provider = new firebaseAuth.GoogleAuthProvider();

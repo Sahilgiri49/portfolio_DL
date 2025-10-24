@@ -1,4 +1,5 @@
 
+
 import React, { Suspense, useState, useEffect } from 'react';
 import Scene from './components/Scene';
 import UI from './components/UI';
@@ -7,7 +8,8 @@ import Intro from './components/Intro';
 import Admin from './components/Admin';
 import { useStore } from './store/useStore';
 import { db } from './firebase';
-import { collection, getDocs } from 'firebase/firestore';
+// Fix: Changed to a namespace import for firestore to resolve module loading errors.
+import * as firestore from 'firebase/firestore';
 import type { Project } from './types';
 
 const App: React.FC = () => {
@@ -26,8 +28,8 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const projectsCollection = collection(db, 'projects');
-        const projectSnapshot = await getDocs(projectsCollection);
+        const projectsCollection = firestore.collection(db, 'projects');
+        const projectSnapshot = await firestore.getDocs(projectsCollection);
         
         const projectsList = projectSnapshot.docs.map(doc => ({
           ...doc.data(),
