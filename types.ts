@@ -1,5 +1,6 @@
-// Fix: Import React to bring the JSX namespace into scope, allowing for augmentation.
-import * as React from 'react';
+// Fix: Use a triple-slash directive to ensure React's global JSX types are available for augmentation.
+// This resolves an issue where the original JSX.IntrinsicElements was being replaced instead of extended.
+/// <reference types="react" />
 
 // Fix: Use a regular import instead of `import type` to ensure the global JSX
 // namespace augmentation is correctly applied by the TypeScript compiler.

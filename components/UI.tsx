@@ -71,7 +71,7 @@ const ProjectsPage: React.FC = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: i * 0.1 }}
-                            className="group relative bg-black/50 border border-cyan-glow/30 rounded-lg overflow-hidden w-full aspect-[4/3]"
+                            className="group relative bg-black/50 border border-cyan-glow/30 rounded-lg overflow-hidden w-full aspect-video"
                         >
                            <img 
                                 src={project.image} 
